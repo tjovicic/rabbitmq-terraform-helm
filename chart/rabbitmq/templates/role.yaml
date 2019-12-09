@@ -1,0 +1,11 @@
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: {{ .Release.Name }}-rabbitmq-endpoint-reader
+  labels:
+    app.kubernetes.io/name: {{ .Release.Name }}
+    app.kubernetes.io/component: rabbitmq-server
+rules:
+- apiGroups: [""]
+  resources: ["endpoints"]
+  verbs: ["get"]

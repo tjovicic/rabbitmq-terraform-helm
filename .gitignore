@@ -1,0 +1,9 @@
+.idea
+.terraform*
+terraform.tfstate*
+credentials.json
+rabbit.yaml
+venv
+__pycache__
+.vscode
+

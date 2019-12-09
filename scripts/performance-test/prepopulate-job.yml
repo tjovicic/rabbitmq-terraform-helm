@@ -1,0 +1,36 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: rabbitmq-prepopulate
+spec:
+  template:
+    spec:
+      containers:
+        - name: rabbitmq-prepopulate
+          image: pivotalrabbitmq/perf-test:latest
+          args:
+            - "--uri"
+            - "amqp://rabbit:rabbit@10.142.0.103"
+            - "--queue-pattern" # Create queues
+            - "'perf-test-%d'"
+            - "--queue-pattern-from"
+            - "1"
+            - "--queue-pattern-to"
+            - "20"
+            - "--producers" # Number of producers per queue
+            - "100"
+            - "--consumers" # Number of overall consumers
+            - "0"
+            - "--size" # Message size in bytes
+            - "400"
+            - "--pmessages" # Messages per producer
+            - "250"
+            - "--type" # Exchange type
+            - "fanout"
+            - "--rate" # Producer rate
+            - "30"
+            - "--producer-random-start-delay" # Randomize producer start
+            - "60"
+            - "--time" # Run duration in seconds
+            - "200"
+      restartPolicy: Never
